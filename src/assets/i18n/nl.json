@@ -1,11 +1,12 @@
 {
-  "NAME": "Naam",
+  "FIRSTNAME": "Voornaam",
+  "LASTNAME": "Achternaam",
   "PASSWORD": "Wachtwoord",
   "EMAIL": "E-mail",
   "LOGIN": "Inloggen",
-  "SIGNUP": "Aanmelden",
+  "SIGNUP": "Registreren",
 
-  "TAB1_TITLE": "Items",
+  "TAB1_TITLE": "Feed",
   "TAB2_TITLE": "Zoeken",
   "TAB3_TITLE": "Instellingen",
 
@@ -30,12 +31,14 @@
 
   "WELCOME_TITLE": "Welkom",
 
-  "LOGIN_TITLE": "Aanmelden",
-  "LOGIN_ERROR": "Inloggen mislukt. Controleer a.u.b. uw account informatie en probeer het nogmaals.",
+  "LOGIN_TITLE": "Inloggen",
+  "LOGIN_ERROR": "Inloggen mislukt. Controleer uw account informatie en probeer het nogmaals.",
+  "LOGIN_ERR_INVALID_PASSWORD": "Onjuist wachtwoord.",
   "LOGIN_BUTTON": "Inloggen",
-  "SIGNUP_TITLE": "Aanmelden",
-  "SIGNUP_ERROR": "Aanmelden mislukt. Controleer a.u.b. uw account informatie en probeer het nogmaals.",
-  "SIGNUP_BUTTON": "Aanmelden",
+  "SIGNUP_TITLE": "Registreren",
+  "SIGNUP_ERROR": "Registreren mislukt. Controleer uw account informatie en probeer het nogmaals.",
+  "SIGNUP_ERR_EMAIL_EXISTS": "Er bestaat reeds een account met dit e-mail adres. Probeer in te loggen.",
+  "SIGNUP_BUTTON": "Registreren",
 
   "LIST_MASTER_TITLE": "Items",
 
