@@ -1,0 +1,22 @@
+<!-- <div class="meal-entry" *ngIf="!userFeed || userFeed.length == 0">
+  <div class="header">Just now</div>
+  <div class="content">No entries! Everyone is starving apparantly :|</div>
+</div> -->
+
+<div class="meal-entry">
+  <div class="header">
+    <span class="username">{{mealEntry?.email}}</span>
+    <span class="timestamp">{{ getTimeStamp(mealEntry?.datetime) }} ago</span>
+  </div>
+  <!-- <img src="{{ mealEntry?.food_pics[0] }}" *ngIf="mealEntry?.food_pics[0]"/> -->
+  <div class="content">
+
+    <div class="about">
+      <ion-icon name="restaurant"></ion-icon>
+    </div>
+
+    <div class="foods">
+      <span>{{ mealEntry?.mealDesc }}</span>
+    </div>
+  </div>
+</div>

@@ -1,30 +1,41 @@
-/**
- * A generic model that our Master-Detail pages list, create, and delete.
- *
- * Change "Item" to the noun your app will use. For example, a "Contact," or a
- * "Customer," or a "Animal," or something like that.
- *
- * The Items service manages creating instances of Item, so go ahead and rename
- * that something that fits your app as well.
- */
 export class MealEntry {
 
-  private username: string;
-  private profilepic: string;
-  private datetime: Date;
-  private foodpic: string;
-  private meal_desc: string;
-  private ingredients: Array<string>;
+  email: string;
+  profilePic: string;
+  datetime: Date;
+  foodPics: string[];
+  mealDesc: string;
+  foods: string[];
+  comment: string;
 
-  constructor(username, profilepic, datetime, foodpic, meal_desc, ingredients) {
-    this.username = username;
-    this.profilepic = profilepic;
+  constructor(email, profilePic, datetime, foodpic, mealDesc, foods, comment) {
+    this.email = email;
+    this.profilePic = profilePic;
     this.datetime = datetime;
-    this.meal_desc = meal_desc;
-    this.ingredients = ingredients;
+    this.mealDesc = mealDesc;
+    this.foods = foods;
+    this.comment = comment;
+  }
+
+  public copyInto(json: any) {
+    console.log('ja dees zoekte nu ok', json);
+    this.email = json.email;
+    this.profilePic = json.profile_pic;
+    this.datetime = json.datetime.toDate();
+    console.log(json.datetime);
+    console.log(this.datetime);
+    this.mealDesc = json.meal_desc;
+    this.comment = json.comment;
+
+    // Loop through foods and foodpics and insert them into the array
+    this.foods = new Array();
+    for (var i = 0; i < json.ingredients.length; i++) {
+      this.foods[i] = json.ingredients[i];
+    }
+
+    this.foodPics = new Array();
+    for (i = 0; i < json.food_pics.length; i++) {
+      this.foodPics[i] = json.food_pics[i];
+    }
   }
 }
-/*
-export interface Item {
-  [prop: string]: any;
-}*/

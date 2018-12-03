@@ -1,5 +1,5 @@
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { ErrorHandler, NgModule } from '@angular/core';
+import { ErrorHandler, NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { Camera } from '@ionic-native/camera';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -9,9 +9,14 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 
-import { Items } from '../mocks/providers/items';
+// import { Items } from '../mocks/providers/items';
+// import { MealEntries } from '../providers/mealentries';
+import { MealService } from '../services/meal.service';
+import { UserService } from '../services/user.service';
 import { Settings, User, Api } from '../providers';
 import { MyApp } from './app.component';
+import { ComponentsModule } from '../components/components.module';
+import { MealEntryComponent } from '../components/meal-entry/meal-entry';
 
 // The translate loader needs to know where to load i18n files
 // in Ionic's static asset pipeline.
@@ -49,7 +54,8 @@ export function provideSettings(storage: Storage) {
       }
     }),
     IonicModule.forRoot(MyApp),
-    IonicStorageModule.forRoot()
+    IonicStorageModule.forRoot(),
+    ComponentsModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -57,7 +63,10 @@ export function provideSettings(storage: Storage) {
   ],
   providers: [
     Api,
-    Items,
+    MealService,
+    UserService,
+    //Items,
+    //MealEntries,
     User,
     Camera,
     SplashScreen,
@@ -65,6 +74,7 @@ export function provideSettings(storage: Storage) {
     { provide: Settings, useFactory: provideSettings, deps: [Storage] },
     // Keep this to enable Ionic's runtime error handling during development
     { provide: ErrorHandler, useClass: IonicErrorHandler }
-  ]
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA ]
 })
 export class AppModule { }

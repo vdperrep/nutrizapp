@@ -21,13 +21,12 @@ import { DataSnapshot, Reference, FirebaseDatabase } from '@firebase/database-ty
 
 export class Api {
   url: string = "https://mealshare-app.firebaseio.com";
-  public _db: any;
-  private _mealEntriesRef: any;  
+  public db: any;
 
   constructor(public http: HttpClient) {
     //console.log('testje toont ne keer ok');
     console.log('test nummer 2');
-    var app: firebase.app.App = firebase.initializeApp({
+    firebase.initializeApp({
       apiKey: "AIzaSyD6FCHJrAspvZ6zhEg-uZ1oENVhtWy-hLs",
       authDomain: "mealshare-app.firebaseapp.com",
       databaseURL: "https://mealshare-app.firebaseio.com",
@@ -36,18 +35,10 @@ export class Api {
       messagingSenderId: "335620795224"
     });
   
-    // Access the real-time database in the initialized application.
-    var db: firebase.database.Database = app.database();
-
-    this._db = firebase.database().ref('/'); // Get a firebase reference to the root
-    this._mealEntriesRef = firebase.database().ref('/meal_entries'); // Get a firebase reference to the meal entries
-
-    // Attach an asynchronous callback to read the data at our posts reference
-    this._mealEntriesRef.on("value", function(snapshot) {
-      console.log(snapshot.val());
-    }, function (errorObject) {
-      console.log("The read failed: " + errorObject.code);
-    });
+    this.db = firebase.firestore(); // Get a firebase firestore reference to the root
+    const settings = {/* your settings... */ timestampsInSnapshots: true};
+    this.db.settings(settings);
+    
   }
 
   public registerUserWithEmailAndPassword(email, pass) {

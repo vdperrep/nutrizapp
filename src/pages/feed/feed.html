@@ -1,19 +1,12 @@
 <ion-header>
-    <ion-navbar>
-      <ion-title>
-        Feed
-      </ion-title>
-    </ion-navbar>
-  </ion-header>
+</ion-header>
   
-  <ion-content padding>
-    <p>
-      This is the user feed. Here, you will see what you and your friends are eating.
-    </p>
+<ion-content>
+  <button ion-button class="btn-post">Plaatsen</button>
 
-    <section>
-      <div *ngFor="let entry of mealEntries">
-        
-      </div>
-    </section>
-  </ion-content>
+  <meal-entry *ngFor="let entry of userFeed" [mealEntry]="entry"></meal-entry>
+
+  <ion-infinite-scroll (ionInfinite)="continueFeed($event)">
+      <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>

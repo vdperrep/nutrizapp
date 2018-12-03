@@ -30,6 +30,10 @@ export class User {
 
   constructor(public api: Api) { }
 
+  getCurrentUser() {
+    return this._user;
+  }
+
   /**
    * Send a POST request to our login endpoint with the data
    * the user entered on the form.
@@ -94,7 +98,8 @@ export class User {
               db.collection("users").doc(user.user.email).set({
                   email: user.user.email,
                   first_name: accountInfo.firstname,
-                  last_name: accountInfo.lastname
+                  last_name: accountInfo.lastname,
+                  register_date: new Date()
               })
               .then(function() {
                   resolve(user);
