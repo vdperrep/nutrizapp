@@ -26,7 +26,7 @@ export class MealService {
 
     return rtval;
   }
-
+/*
   public getUserFeed_first(email: string) {
     var first = this.api.db.collection("meal_entries")
         .where('email', "==", email)
@@ -63,7 +63,7 @@ export class MealService {
       }); 
     });
   }
-/*
+
   public getUserFeed(email: string) {
     return new Promise((resolve, reject) => {
       this.api.db.collection("meal_entries").where('email', "==", email).get()

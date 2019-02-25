@@ -1,25 +1,64 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-
-// include firebase core
-import * as firebase from 'firebase/app'
-// include services that you want
-import 'firebase/auth'
-import 'firebase/database'
-// servervalue timestamp is here
-import { ServerValue } from '@firebase/database'
-// types are in these packages
-import { FirebaseApp } from '@firebase/app-types'
-import { FirebaseAuth } from '@firebase/auth-types'
-import { DataSnapshot, Reference, FirebaseDatabase } from '@firebase/database-types'
-
+import { Storage } from '@ionic/storage';
 
 /**
  * Api is a generic REST Api handler. Set your API url first.
  */
-@Injectable()
+let apiUrl = 'http://localhost/index.php/';
 
+@Injectable()
 export class Api {
+  constructor (public http: HttpClient,
+               public storage: Storage) {}
+
+  postData(data, type) {
+    return new Promise((resolve, reject) => {
+      
+      const httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type':  'application/json'
+        })
+      };
+
+      this.http.post(apiUrl + type, JSON.stringify(data), httpOptions).subscribe(res => {
+        resolve(res);
+      }, (e) => {
+        reject(e);
+      });
+    });
+  }
+
+  getData(data, type) {
+    return new Promise((resolve, reject) => {
+      var userdata : any;
+      this.storage.get('userData').then((res) => {
+        console.log('Userdata found:', res);
+        userdata = res;
+      }, (e) => {
+        reject(e);
+      })
+      
+      const httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type':  'application/json',
+          'Authorization': 'Basic ' + userdata.token
+        })
+      };
+
+      this.http.get(apiUrl + type, httpOptions).subscribe(res => {
+        resolve(res);
+      }, (e) => {
+        reject(e);
+      });
+    });
+  }
+}
+
+
+
+
+  /*
   url: string = "https://mealshare-app.firebaseio.com";
   public db: any;
 
@@ -36,7 +75,7 @@ export class Api {
     });
   
     this.db = firebase.firestore(); // Get a firebase firestore reference to the root
-    const settings = {/* your settings... */ timestampsInSnapshots: true};
+    const settings = {/* your settings...  timestampsInSnapshots: true};
     this.db.settings(settings);
     
   }
@@ -89,4 +128,4 @@ export class Api {
   patch(endpoint: string, body: any, reqOpts?: any) {
     return this.http.patch(this.url + '/' + endpoint, body, reqOpts);
   }
-}
+}*/

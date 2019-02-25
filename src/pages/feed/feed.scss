@@ -1,8 +1,17 @@
-page-home {
+page-feed {
   .btn-post {
     width: 50%;
-    margin-left: 30%;
-    margin-right: 30%;
+    margin: 0 auto;
     text-align: center;
   }
+
+  #foodheader {
+    background-color: $color-primary;
+    color: $color-primary;
+    position: relative;
+    width: 100%;
+    margin-top: 0;
+    height: 75px;
+  }
+
 }

@@ -17,6 +17,11 @@ export class FeedPage {
 
   constructor(public navCtrl: NavController, public mealService: MealService, public userService: UserService) {}
 
+  ionViewDidLoad() {
+    
+  }
+
+  /*
   private loadFeed() {
     this.mealService.getUserFeed_first(this.userService.loggedInUser.email)
       .then((result: MealEntry[]) => {
@@ -70,9 +75,10 @@ export class FeedPage {
         "meal_desc":"Spaghetti met Kaas",
         "ingredients":["Spaghetti", "Kaas"]
       }
-    ]*/
+    ]
     console.log('Loading feed...');
     this.loadFeed();
     console.log('Feed loaded');
-  }
+  }*/
+  
 }

@@ -1,7 +1,5 @@
 import 'rxjs/add/operator/toPromise';
 import { Injectable } from '@angular/core';
-import * as firebase from 'firebase';
-import * as firestore from 'firebase/firestore';
 import { User } from '../models/user';
 import { Api } from '../providers/api/api';
 
@@ -21,7 +19,7 @@ export class UserService {
   private logOutUser() {
     this.loggedInUser = null;
   }
-
+/*
   login(email: string, password: string) {
     return new Promise((resolve, reject) => {
       const auth = firebase.auth();
@@ -48,8 +46,41 @@ export class UserService {
         reject(e);
       });      
     });
+  }*/
+
+
+  signup(accountInfo: any) {
+    return new Promise((resolve, reject) => {
+      this.api.postData(accountInfo, 'signup').then((res) => {
+        resolve(res);
+      }, (e) => {
+        reject(e);
+      })
+    })
   }
 
+  login(email: string, password: string) {
+    return new Promise((resolve, reject) => {
+      if (!email || !password) {
+        reject(Error('No email or password given'));
+      }
+
+      let accountInfo = {email: '', password: ''};
+      accountInfo.email = email;
+      accountInfo.password = password;
+
+      this.api.postData(accountInfo, 'login').then((res) => {
+        resolve(res);
+      }, (e) => {
+        reject(e);
+      })
+    })
+  }
+
+
+
+
+/*
   register(accountInfo: any) {
       return new Promise((resolve, reject) => {
         const auth = firebase.auth();
@@ -92,5 +123,5 @@ export class UserService {
           reject(e);
         });      
     });
-  }
+  }*/
 }

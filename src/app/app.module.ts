@@ -8,10 +8,12 @@ import { IonicStorageModule, Storage } from '@ionic/storage';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
+import { HttpModule } from '@angular/http';
 
 // import { Items } from '../mocks/providers/items';
 // import { MealEntries } from '../providers/mealentries';
 import { MealService } from '../services/meal.service';
+import { FoodService } from '../services/food.service';
 import { UserService } from '../services/user.service';
 import { Settings, User, Api } from '../providers';
 import { MyApp } from './app.component';
@@ -46,6 +48,7 @@ export function provideSettings(storage: Storage) {
   imports: [
     BrowserModule,
     HttpClientModule,
+    HttpModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -64,6 +67,7 @@ export function provideSettings(storage: Storage) {
   providers: [
     Api,
     MealService,
+    FoodService,
     UserService,
     //Items,
     //MealEntries,

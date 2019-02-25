@@ -1,9 +1,12 @@
 import { Component } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { IonicPage, NavController, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, ToastController, LoadingController } from 'ionic-angular';
+import { Http, Headers, RequestOptions }  from "@angular/http";
+import { Storage } from "@ionic/storage";
 
-import { User, Api } from '../../providers';
-import { MainPage } from '../';
+import { User } from '../../providers';
+import { UserService } from '../../services/user.service';
+import { TabsPage } from '../tabs/tabs';
 
 @IonicPage()
 @Component({
@@ -25,16 +28,78 @@ export class SignupPage {
   private signupErrorString: string;
 
   constructor(public navCtrl: NavController,
-    public user: User,
-    public toastCtrl: ToastController,
-    public translateService: TranslateService) {
-
-    this.translateService.get('SIGNUP_ERROR').subscribe((value) => {
-      this.signupErrorString = value;
-    })
+              public toastCtrl: ToastController,
+              public translateService: TranslateService,
+              public http: Http,
+              public loadingCtrl: LoadingController,
+              public userService: UserService,
+              public storage: Storage
+    ) {
+      this.translateService.get('SIGNUP_ERROR').subscribe((value) => {
+        this.signupErrorString = value;
+      })
   }
 
   doSignup() {
+  /*  var headers = new Headers();
+    headers.append("Accept", 'application/json');
+    headers.append('Content-Type', 'application/json');
+    let options = new RequestOptions({ headers: headers });
+*/
+    let data = {
+      firstname: this.account.firstname,
+      lastname: this.account.lastname,
+      username: this.account.username,
+      password: this.account.password,
+      email: this.account.email
+    };
+
+    console.log(data);
+
+    let loader = this.loadingCtrl.create({
+      //content: 'Processing please wait…',
+    });
+
+    loader.present().then(() => {
+
+      this.userService.signup(data).then((res) => {
+        console.log(res);
+        loader.dismiss();
+
+        // Save userdata (including the token) locally
+        this.storage.set('userData', res);
+
+        // Redirect to homepage
+        this.navCtrl.push(TabsPage);
+      }, (e) => {
+        loader.dismiss();
+        if (e.error && e.error.code == 'LOGIN_INVALID_CREDENTIALS') {
+          var toast = this.toastCtrl.create({
+            message: e.error.message,
+            duration: 5000,
+            position: 'top'
+          });
+          toast.present();
+        }
+        console.log(e);
+      });
+
+
+/*
+      this.http.post('http://127.0.0.1/mobile/register.php', data, options)
+        .subscribe((res) => {
+          console.log(res);
+        });*/
+
+      //data.password = sha512(data.password);
+    })
+  }  
+}
+
+
+
+
+/*
     // Attempt to login in through our User service
     this.user.register(this.account).then((resp) => {
       this.navCtrl.push(MainPage);
@@ -44,6 +109,7 @@ export class SignupPage {
 
       // Unable to sign up
       // Interpret reason and show corresponding message
+      
       let toast: any;
 
       console.log(err);
@@ -72,5 +138,29 @@ export class SignupPage {
 
       
     });
-  }
-}
+    
+    
+    
+
+    this.http.post('http://127.0.0.1/mobile/register.php', data, options)
+        .map(res => res.json())
+        .subscribe(res => {
+          loader.dismiss()
+          
+          if (res == "Registration successfull") {  // success
+            let alert = this.toastCtrl.create({
+              message:(res)
+            });
+            
+            alert.present();
+            this.navCtrl.push(MainPage);
+          } else {
+            let alert = this.toastCtrl.create({  // error
+              message:(res)
+            });
+            
+            alert.present();
+          }
+        })      
+    
+    */
