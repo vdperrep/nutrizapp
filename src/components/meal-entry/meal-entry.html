@@ -5,8 +5,8 @@
 
 <div class="meal-entry">
   <div class="header">
-    <span class="username">{{mealEntry?.email}}</span>
-    <span class="timestamp">{{ getTimeStamp(mealEntry?.datetime) }} ago</span>
+    <span class="username">{{mealEntry?.ent_username}}</span>
+    <span class="timestamp">{{ getTimeStamp(mealEntry?.ent_date) }} ago</span>
   </div>
   <!-- <img src="{{ mealEntry?.food_pics[0] }}" *ngIf="mealEntry?.food_pics[0]"/> -->
   <div class="content">
@@ -16,7 +16,7 @@
     </div>
 
     <div class="foods">
-      <span>{{ mealEntry?.mealDesc }}</span>
+      <span>{{ getMealDescription() }}</span>
     </div>
   </div>
 </div>

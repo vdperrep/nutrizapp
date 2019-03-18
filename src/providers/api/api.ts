@@ -6,6 +6,7 @@ import { Storage } from '@ionic/storage';
  * Api is a generic REST Api handler. Set your API url first.
  */
 let apiUrl = 'http://localhost/index.php/';
+let userData: any = null;
 
 @Injectable()
 export class Api {
@@ -29,28 +30,75 @@ export class Api {
     });
   }
 
-  getData(data, type) {
+  getData(data : string, type : string) {
     return new Promise((resolve, reject) => {
-      var userdata : any;
-      this.storage.get('userData').then((res) => {
-        console.log('Userdata found:', res);
-        userdata = res;
-      }, (e) => {
-        reject(e);
-      })
+      let httpOptions;
       
-      const httpOptions = {
-        headers: new HttpHeaders({
-          'Content-Type':  'application/json',
-          'Authorization': 'Basic ' + userdata.token
-        })
-      };
+      if (!userData) {
+        this.storage.get('userData').then((res) => {
+          console.log('Userdata found (get):', res);
+          userData = res;
 
-      this.http.get(apiUrl + type, httpOptions).subscribe(res => {
+          httpOptions = {
+            headers: new HttpHeaders({
+              'Content-Type':  'application/json',
+              'Authorization': 'Basic ' + userData.token
+            })
+          };
+
+          console.log('sent with auth header');
+          
+          this.http.get(apiUrl + type + '/' + data, httpOptions).subscribe(res => {
+            resolve(res);
+          }, (e) => {
+            reject(e);
+          });    
+
+        }, (e) => {
+          reject(e);
+        });
+      }
+      else
+      {
+        httpOptions = {
+          headers: new HttpHeaders({
+            'Content-Type':  'application/json',
+            'Authorization': 'Basic ' + userData.token
+          })
+        };
+
+        console.log('sent with auth header');
+        
+        this.http.get(apiUrl + type + '/' + data, httpOptions).subscribe(res => {
+          resolve(res);
+        }, (e) => {
+          reject(e);
+        });    
+      }
+      /*
+      if (userdata) {
+        httpOptions = {
+          headers: new HttpHeaders({
+            'Content-Type':  'application/json',
+            'Authorization': 'Basic ' + userdata.token
+          })
+        };
+
+        console.log('sent with auth header');
+      } else {
+        httpOptions = {
+          headers: new HttpHeaders({
+            'Content-Type':  'application/json'
+          })
+        };
+        console.log('sent withOUT auth header');
+      }
+       
+      this.http.get(apiUrl + type + '/' + data, httpOptions).subscribe(res => {
         resolve(res);
       }, (e) => {
         reject(e);
-      });
+      });*/
     });
   }
 }

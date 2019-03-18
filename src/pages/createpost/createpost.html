@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Content
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <p id="entry">
+    <span class="new-post" *ngFor="let food of post.foods; let i = index" >
+      <span *ngIf="food.edt_join" class="food-context">{{food.edt_join}}</span>
+      <span *ngIf="!food.edt_join" [ngClass]="[food.fod_id ? 'food-existent' : 'food-new']">{{food.fod_name}}
+        <ion-icon name="close-circle-outline" class="close-icon" (click)="removeFood(i)"></ion-icon>
+      </span>
+    </span>
+    <span><ion-input #input type="text" [(ngModel)]="ipt" (ionChange)="refreshSuggestions()"></ion-input></span>
+  </p>
+  <div id="sug-box" [hidden]="!ipt || ipt.length > 20"> <!-- [ngClass]="{'fadeIn': ipt && ipt.length < 15}" -->
+    <ul>
+      <li><span>{{ipt}}</span><ion-icon name="add-circle"></ion-icon></li>
+      <li *ngFor="let sug of suggestions"><span>{{sug.fod_name}}</span></li>
+    </ul>
+  </div>
+<!-- 
+  Solution: EVERYTHING is in the array. Existing foods, non-existing foods and context. The 
+  array will hold information about the type (class=existing | nonexisting | context).
+  That way, ngClass just needs to contain that type.
+
+-->
+
+
+  <!--<ion-input [hidden]="true" (input)="changePost()" (ionChange)="changePost()" type="text" [(ngModel)]="model"></ion-input>-->
+<!--<ion-input #input type="text" [(ngModel)]="ipt"></ion-input>-->
+  <button *ngIf="ipt" class="btn-context" ion-button (click)="addContext()"><ion-icon name="arrow-round-forward"></ion-icon></button>
+</ion-content>

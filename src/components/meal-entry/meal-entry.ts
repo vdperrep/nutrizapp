@@ -12,7 +12,7 @@ import { MealEntry } from '../../models/mealentry';
   templateUrl: 'meal-entry.html'
 })
 export class MealEntryComponent {
-  @Input() mealEntry: MealEntry;
+  @Input() mealEntry: any;
 
   constructor() {}
 
@@ -27,5 +27,20 @@ export class MealEntryComponent {
     if (hDiff > 24*60)  return Math.round(hDiff / 60 / 24) + 'd';
     if (hDiff >= 60)    return Math.round(hDiff / 60) + 'h';
     else return Math.round(hDiff) + 'm';
+  }
+
+  public getMealDescription() {
+    console.log(this.mealEntry.foods);
+
+    let rtval : string = '';
+    let f : any;
+    for (f of this.mealEntry.foods) {
+      console.log(f.fod_name);
+      if (f.edt_join) {
+        rtval = rtval + f.edt_join;
+      }
+      rtval = rtval + f.fod_name;
+    }
+    return rtval;
   }
 }

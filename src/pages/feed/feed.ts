@@ -2,8 +2,10 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController } from 'ionic-angular';
 import { UserService } from '../../services/user.service';
 import { MealService } from '../../services/meal.service';
+import { FoodService } from '../../services/food.service';
 import { MealEntry } from '../../models/mealentry';
 import { MealEntryComponent } from '../../components/meal-entry/meal-entry';
+import { Storage } from '@ionic/storage';
 
 @IonicPage()
 @Component({
@@ -13,12 +15,29 @@ import { MealEntryComponent } from '../../components/meal-entry/meal-entry';
 
 export class FeedPage {
 
-  private userFeed: MealEntry[] = null;
+  private userFeed: any = null;
+  private userData: any = null;
 
-  constructor(public navCtrl: NavController, public mealService: MealService, public userService: UserService) {}
+  constructor(public navCtrl: NavController, public mealService: MealService, public userService: UserService, public foodService: FoodService, public storage: Storage) {}
 
   ionViewDidLoad() {
-    
+    this.storage.get('userData').then((res) => {
+      console.log('Userdata found:', res);
+      this.userData = res;
+
+      if (this.userData) {
+        this.foodService.getUserFeed(this.userData.usr_id).then((res: any) => {
+          this.userFeed = res.data;
+          console.log('userFeed: ', res);
+        });
+      }
+    }, (e) => {
+      console.log('Something went wrong while requesting the user feed.', e);
+    });
+  }
+
+  newPost() {
+    this.navCtrl.push('CreatePostPage');
   }
 
   /*

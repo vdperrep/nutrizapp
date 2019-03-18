@@ -5,7 +5,7 @@
 </ion-header>
 
 <ion-content>
-  <button ion-button class="btn-post">Plaatsen</button>
+  <button ion-button class="btn-post" (click)="newPost()">Plaatsen</button>
 
   <meal-entry *ngFor="let entry of userFeed" [mealEntry]="entry"></meal-entry>
 

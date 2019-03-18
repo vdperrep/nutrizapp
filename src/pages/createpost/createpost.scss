@@ -1,0 +1,92 @@
+page-create-post {
+  .new-post {
+    font-size: 150%;
+  }
+
+  .food-existent {
+    border: 1px solid yellow;
+    border-radius: 8px;
+    background-color: rgba(213, 216, 0, 0.5);
+    padding: 3px 3px 3px 6px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    display: inline-block;
+  }
+
+  .food-new {
+    border: 1px solid green;
+    border-radius: 8px;
+    background-color: rgba(173, 54, 40, 0.5);
+    padding: 3px;
+  }
+
+  .close-icon {
+    color: rgb(213, 216, 0);
+    vertical-align: text-bottom;
+    padding-left: 7px;
+    padding-right: 4px;
+  }
+
+  #sug-box {
+    width: 82%;
+    float: left;
+    padding: 0;
+
+    ul {
+      list-style-type: none;
+      list-style: none;
+      padding-left: 0;
+      border-radius: 25px;      
+      -moz-border-radius: 25px;
+      -webkit-border-radius: 25px;
+      border: 1px solid rgb(213, 216, 0);
+      background-color: white;
+      margin: 0;
+
+      li {
+        width: 100%;
+        padding: 15px;
+
+        ion-icon {
+          float: right;
+          font-size: 160%;
+          color: rgb(0, 165, 0);          
+        }
+      }
+
+      li:not(:last-child) {
+        border-bottom: 0.5px solid grey;
+      }
+
+      li:active {
+        //background-color: rgb(213, 216, 0);
+      }
+    }
+  }
+
+  .btn-context {
+    background-color: rgb(175, 175, 175);
+    width: 50px;
+    height: 50px;
+    float: right;
+    
+    ion-icon {
+      font-size: 30px;
+    }
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+  
+    to {
+      opacity: 1;
+    }
+  }
+
+  .fadeIn {
+    animation-name: fadeIn;
+    animation-duration: 4s;
+  }
+}

@@ -18,7 +18,7 @@ export class LoginPage {
   // If you're using the username field with or without email, make
   // sure to add it to the type
   account: { email: string, password: string } = {
-    email: 'giovanni17@gmail.com',
+    email: 'pieterjanvdp@gmail.com',
     password: 'giovanni'
   };
 
@@ -45,9 +45,13 @@ export class LoginPage {
 
   ionViewDidLoad() {
     this.storage.get('userData').then((res) => {
-      console.log('Userdata found:', res);
-      this.navCtrl.push('TabsPage');
-    })
+      if (res) {
+        console.log('Userdata found (auto login):', res);
+        //this.navCtrl.push('TabsPage');
+      }
+    }, (e) => {
+      // Do nothing
+    });
   }
 
   login() {
